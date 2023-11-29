@@ -1,5 +1,5 @@
-hdfs/
+hdfs
 metastore*
-employee/
-venv/
+employee
+venv
 data.ipynb
