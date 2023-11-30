@@ -1,5 +1,5 @@
+# Import necessary libraries
 import requests
-import json
 
 # Fetch tranctions data
 def get_transactions():
