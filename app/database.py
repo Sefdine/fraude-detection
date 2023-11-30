@@ -29,7 +29,7 @@ def get_connection():
 def create_tables():
     queries = [
         '''
-        CREATE EXTERNAL TABLE IF NOT EXISTS transactions (
+        CREATE TABLE IF NOT EXISTS transactions (
             amount FLOAT,
             currency STRING,
             customer_id STRING,
@@ -43,25 +43,26 @@ def create_tables():
         LOCATION 'hdfs://namenode:8020/user/hive/warehouse/fraude_detection.db/transactions'
         ''',
         '''
-        CREATE EXTERNAL TABLE IF NOT EXISTS customers (
+        CREATE TABLE IF NOT EXISTS customers (
             account_history ARRAY<STRING>,
             avg_transaction_value FLOAT,
             customer_id STRING,
-            demographics_age INT, 
-            demographics_location STRING
+            demographics_age INT,
+            demographics_locations STRING
         )
         STORED AS PARQUET
         LOCATION 'hdfs://namenode:8020/user/hive/warehouse/fraude_detection.db/customers'
         ''',
         '''
-        CREATE EXTERNAL TABLE IF NOT EXISTS blacklist_info (
+        CREATE TABLE IF NOT EXISTS blacklist_info (
+            id INT,
             merchand STRING
         )
         STORED AS PARQUET
         LOCATION 'hdfs://namenode:8020/user/hive/warehouse/fraude_detection.db/blacklist_info'
         ''',
         '''
-        CREATE EXTERNAL TABLE IF NOT EXISTS credit_fraud (
+        CREATE TABLE IF NOT EXISTS credit_fraud (
             customer_id STRING,
             credit_score INT,
             fraud_reports INT
