@@ -44,18 +44,17 @@ def create_tables():
         ''',
         '''
         CREATE TABLE IF NOT EXISTS customers (
-            account_history ARRAY<STRING>,
-            behavioral_patterns STRUCT<avg_transaction_value: FLOAT>,
+            account_history STRING,
+            behavioral_patterns STRING,
             customer_id STRING,
-            demographics STRUCT<age: INT, locations: STRING>
+            demographics STRING
         )
         ROW FORMAT DELIMITED
-        FIELDS TERMINATED BY ','
+        FIELDS TERMINATED BY ';'
         LOCATION 'hdfs://namenode:8020/user/hive/warehouse/fraude_detection.db/customers'
         ''',
         '''
         CREATE TABLE IF NOT EXISTS blacklist_info (
-            id INT,
             merchand STRING
         )
         ROW FORMAT DELIMITED
