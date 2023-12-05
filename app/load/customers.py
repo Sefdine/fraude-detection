@@ -15,7 +15,7 @@ def load_customers():
     customers_data = extract.get_customers()
 
     customers_df = pd.DataFrame(customers_data)
-    customers_df.to_csv('data/customers.csv')
+    customers_df.to_csv('data/customers.csv', index=False, header=False, sep=';')
 
     try:
         # Create a cursor
