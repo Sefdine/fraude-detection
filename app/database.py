@@ -64,7 +64,7 @@ def create_tables():
         '''
         CREATE TABLE IF NOT EXISTS fraud_reports (
             customer_id STRING,
-            fraud_report INT
+            fraud_report STRING
         )
         ROW FORMAT DELIMITED
         FIELDS TERMINATED BY ','
@@ -73,7 +73,7 @@ def create_tables():
         '''
         CREATE TABLE IF NOT EXISTS credit_scores (
             customer_id STRING,
-            credit_score INT
+            credit_score STRING
         )
         ROW FORMAT DELIMITED
         FIELDS TERMINATED BY ','
