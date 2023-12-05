@@ -62,13 +62,20 @@ def create_tables():
         LOCATION 'hdfs://namenode:8020/user/hive/warehouse/fraude_detection.db/blacklist_info'
         ''',
         '''
-        CREATE TABLE IF NOT EXISTS credit_fraud (
+        CREATE TABLE IF NOT EXISTS fraud_reports (
             customer_id STRING,
-            credit_score INT,
-            fraud_reports INT
+            fraud_report INT
         )
         STORED AS PARQUET
-        LOCATION 'hdfs://namenode:8020/user/hive/warehouse/fraude_detection.db/credit_fraud'
+        LOCATION 'hdfs://namenode:8020/user/hive/warehouse/fraude_detection.db/fraud_reports'
+        ''',
+        '''
+        CREATE TABLE IF NOT EXISTS credit_scores (
+            customer_id STRING,
+            credit_score INT
+        )
+        STORED AS PARQUET
+        LOCATION 'hdfs://namenode:8020/user/hive/warehouse/fraude_detection.db/credit_scores'
         '''
     ]
 
