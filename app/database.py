@@ -45,12 +45,12 @@ def create_tables():
         '''
         CREATE TABLE IF NOT EXISTS customers (
             account_history ARRAY<STRING>,
-            avg_transaction_value FLOAT,
+            behavioral_patterns STRUCT<avg_transaction_value: FLOAT>,
             customer_id STRING,
-            demographics_age INT,
-            demographics_locations STRING
+            demographics STRUCT<age: INT, locations: STRING>
         )
-        STORED AS PARQUET
+        ROW FORMAT DELIMITED
+        FIELDS TERMINATED BY ','
         LOCATION 'hdfs://namenode:8020/user/hive/warehouse/fraude_detection.db/customers'
         ''',
         '''
