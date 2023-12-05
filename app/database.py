@@ -58,7 +58,8 @@ def create_tables():
             id INT,
             merchand STRING
         )
-        STORED AS PARQUET
+        ROW FORMAT DELIMITED
+        FIELDS TERMINATED BY ','
         LOCATION 'hdfs://namenode:8020/user/hive/warehouse/fraude_detection.db/blacklist_info'
         ''',
         '''
@@ -66,7 +67,8 @@ def create_tables():
             customer_id STRING,
             fraud_report INT
         )
-        STORED AS PARQUET
+        ROW FORMAT DELIMITED
+        FIELDS TERMINATED BY ','
         LOCATION 'hdfs://namenode:8020/user/hive/warehouse/fraude_detection.db/fraud_reports'
         ''',
         '''
@@ -74,7 +76,8 @@ def create_tables():
             customer_id STRING,
             credit_score INT
         )
-        STORED AS PARQUET
+        ROW FORMAT DELIMITED
+        FIELDS TERMINATED BY ','
         LOCATION 'hdfs://namenode:8020/user/hive/warehouse/fraude_detection.db/credit_scores'
         '''
     ]
