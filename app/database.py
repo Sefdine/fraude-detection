@@ -42,6 +42,7 @@ def create_tables():
         STORED AS PARQUET
         LOCATION 'hdfs://namenode:8020/user/hive/warehouse/fraude_detection.db/transactions'
         ''',
+        "DROP TABLE IF EXISTS customers",
         '''
         CREATE TABLE IF NOT EXISTS customers (
             account_history STRING,
@@ -53,6 +54,7 @@ def create_tables():
         FIELDS TERMINATED BY ';'
         LOCATION 'hdfs://namenode:8020/user/hive/warehouse/fraude_detection.db/customers'
         ''',
+        "DROP TABLE IF EXISTS blacklist_info",
         '''
         CREATE TABLE IF NOT EXISTS blacklist_info (
             merchand STRING
@@ -61,6 +63,7 @@ def create_tables():
         FIELDS TERMINATED BY ','
         LOCATION 'hdfs://namenode:8020/user/hive/warehouse/fraude_detection.db/blacklist_info'
         ''',
+        "DROP TABLE IF EXISTS fraud_reports",
         '''
         CREATE TABLE IF NOT EXISTS fraud_reports (
             customer_id STRING,
@@ -70,6 +73,7 @@ def create_tables():
         FIELDS TERMINATED BY ','
         LOCATION 'hdfs://namenode:8020/user/hive/warehouse/fraude_detection.db/fraud_reports'
         ''',
+        "DROP TABLE IF EXISTS credit_scores",
         '''
         CREATE TABLE IF NOT EXISTS credit_scores (
             customer_id STRING,
@@ -106,3 +110,5 @@ def create_tables():
 
     except Exception as e:
         return f'Error: {str(e)}'
+    
+create_tables()
