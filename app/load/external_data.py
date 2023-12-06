@@ -4,6 +4,7 @@ import sys
 sys.path.append('..')
 from app import extract
 from app.database import get_connection
+import pandas as pd
 
 # Define a connection to the database
 connection = get_connection()
@@ -18,41 +19,37 @@ def load_external_data():
 
     # Extract blacklist info
     blacklist_infos = external_data['blacklist_info']
-    # insert into blacklist
-    insert_blacklist_query = '''
-        INSERT INTO blacklist_info (id, merchand) VALUES (%s, %s)
-    '''
-    blacklist_id = 1
-    for blacklist_info in blacklist_infos:
-        try:
-            cursor.execute(insert_blacklist_query, (blacklist_id, blacklist_info))
-            print (f"{blacklist_info} inserted successfully", end="\r")
-            blacklist_id += 1
-        except Exception as e:
-            print('Error inserting: ',str(e))
+    blacklist_info_df = pd.DataFrame(blacklist_infos)
+    blacklist_info_df.to_csv('data/blacklist_info.csv', index=False, header=False)
+    insert_blacklist_query = "LOAD DATA LOCAL INPATH '/tables_data/blacklist_info.csv' OVERWRITE INTO TABLE blacklist_info"
 
-    print('----- END blacklist -----')
-
-    # Get the credit fraud information
+    # insert into credit score
     credit_scores = external_data['credit_scores']
-    fraud_reports = external_data['fraud_reports']
+    with open('data/credit_scores.csv', 'w') as f:
+        for key, value in credit_scores.items():
+            f.write(f"{key}, {value}\n")
+    insert_credit_scores_query = "LOAD DATA LOCAL INPATH '/tables_data/credit_scores.csv' OVERWRITE INTO TABLE credit_scores"
 
-    # Merge dictionaries
-    merged_data = {key: (credit_scores[key], fraud_reports[key]) for key in credit_scores}
-    # insert into credit_fraud
-    insert_credit_fraud_query = '''
-        INSERT INTO credit_fraud(customer_id, credit_score, fraud_reports) VALUES(%s, %s, %s)
-    '''
-    for customer_id, values in merged_data.items():
-        try:
-            cursor.execute(insert_credit_fraud_query, (
-                customer_id,
-                values[0], # Credit score
-                values[1] # Fraud report
-            ))
-            print(f"Customer {customer_id} inserted into credit_fraud", end="\r")
-        except Exception as e:
-            print('Error inserting ',str(e))
-    print('Proccess completed -----------------------')
+    # insert into fraud reports
+    fraud_reports = external_data['fraud_reports']
+    with open('data/fraud_reports.csv', 'w') as f:
+        for key, value in fraud_reports.items():
+            f.write(f"{key}, {value}\n")
+    insert_fraud_reports_query = "LOAD DATA LOCAL INPATH '/tables_data/fraud_reports.csv' OVERWRITE INTO TABLE fraud_reports"
+
+    try:
+        # Black list
+        cursor.execute(insert_blacklist_query)
+        print('Blacklist_info inserted successfully')
+        
+        # Credit score
+        cursor.execute(insert_credit_scores_query)
+        print('Credit scores inserted successfully')
+
+        # fraud reports
+        cursor.execute(insert_fraud_reports_query)
+        print('Fraud reports inserted successfully')
+    except Exception as e:
+        print('Error inserting: ',str(e))
 
 load_external_data()
