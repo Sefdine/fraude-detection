@@ -11,6 +11,5 @@ jobs:
 
     steps:
     - name: Trigger Airflow DAG
-      working-directory: ../app  # Specify the correct path
       run: |
-        python3 action.py
+        python3 /home/runner/work/fraude-detection/app/action.py
