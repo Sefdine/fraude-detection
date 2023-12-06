@@ -12,19 +12,4 @@ jobs:
     steps:
     - name: Trigger Airflow DAG
       run: |
-        # Set Airflow API variables
-        AIRFLOW_URL="http://localhost:8080"
-        AIRFLOW_DAG_NAME="hive-loader"
-
-        # Trigger Airflow DAG
-        sudo curl -X POST \
-          -H "Content-Type: application/json" \
-          -H "Accept: application/json" \
-          -H "Authorization: Basic bGlrZTpsaWtl" \
-          -d '{
-            "conf": {},
-            "dag_run_id": "000-675-989QAJS",
-            "logical_date": "2023-12-06T13:32:34.842Z",
-            "note": "test postman"
-          }' \
-          "${AIRFLOW_URL}/api/v1/dags/${AIRFLOW_DAG_NAME}/dagRuns"
+        python3 ../app/action.py
