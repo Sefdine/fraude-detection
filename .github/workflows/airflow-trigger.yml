@@ -20,7 +20,7 @@ jobs:
         curl -X POST \
           -H "Content-Type: application/json" \
           -H "Accept: application/json" \
-          -H "Authorization: Basic bGlrZTpsaWtl"
+          -H "Authorization: Basic bGlrZTpsaWtl" \
           -d '{
             "conf": {},
             "dag_run_id": "000-675-989QAJS",
@@ -28,4 +28,3 @@ jobs:
             "note": "test postman"
           }' \
           "${AIRFLOW_URL}/api/v1/dags/${AIRFLOW_DAG_NAME}/dagRuns"
-
