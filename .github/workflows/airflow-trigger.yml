@@ -3,27 +3,18 @@ name: Trigger Airflow DAG
 on:
   push:
     branches:
-      - main
+      - dev
 
 jobs:
   trigger_airflow_dag:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Install Ngrok
-      run: |
-        wget https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip
-        unzip ngrok-stable-linux-amd64.zip
-        chmod +x ngrok
-        sudo mv ngrok /usr/local/bin/ngrok
-
-    - name: Start Ngrok Tunnel
-      run: ngrok http 8080
 
     - name: Trigger Airflow DAG
       run: |
         # Set Airflow API variables
-        AIRFLOW_URL=$(curl -s http://localhost:4040/api/tunnels | jq -r .tunnels[0].public_url)
+        AIRFLOW_URL="http://localhost:8080"
         AIRFLOW_DAG_NAME="hive-loader"
 
         # Trigger Airflow DAG
