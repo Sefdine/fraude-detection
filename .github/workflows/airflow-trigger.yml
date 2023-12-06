@@ -12,22 +12,18 @@ jobs:
     steps:
     - name: Install Ngrok
       run: |
+        echo "Installing Ngrok..."
         wget https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip
         unzip ngrok-stable-linux-amd64.zip
         chmod +x ngrok
         sudo mv ngrok /usr/local/bin/ngrok
 
     - name: Start Ngrok Tunnel
-      run: ngrok http 8080
-
-    - name: Trigger Airflow DAG
       run: |
-        # Set Airflow API variables
-        AIRFLOW_URL=$(curl -s http://localhost:4040/api/tunnels | jq -r .tunnels[0].public_url)
-        AIRFLOW_DAG_NAME="hive-loader"
+        echo "Starting Ngrok tunnel..."
+        ngrok http 8080
 
-        # Trigger Airflow DAG
-        curl -X POST \
-          -H "Content-Type: application/json" \
-          -d '{}' \
-          "${AIRFLOW_URL}/api/v1/dags/${AIRFLOW_DAG_NAME}/dagRuns"
+    - name: Display Ngrok Debug Info
+      run: |
+        echo "Displaying Ngrok debug info..."
+        curl http://localhost:4040/api/tunnels
