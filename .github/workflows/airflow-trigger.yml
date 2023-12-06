@@ -12,4 +12,4 @@ jobs:
     steps:
     - name: Trigger Airflow DAG
       run: |
-        python3 ../app/action.py
+        python3 /app/action.py
