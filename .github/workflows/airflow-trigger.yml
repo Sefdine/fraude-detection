@@ -1,0 +1,23 @@
+name: Trigger Airflow DAG
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  trigger_airflow_dag:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Trigger Airflow DAG
+      run: |
+        # Set Airflow API variables
+        AIRFLOW_URL="http://localhost:8080/" 
+        AIRFLOW_DAG_NAME="hive-loader"
+
+        # Trigger Airflow DAG
+        curl -X POST \
+          -H "Content-Type: application/json" \
+          "${AIRFLOW_URL}/api/v1/dags/${AIRFLOW_DAG_NAME}/dagRuns"
+
