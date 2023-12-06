@@ -17,7 +17,7 @@ jobs:
         AIRFLOW_DAG_NAME="hive-loader"
 
         # Trigger Airflow DAG
-        curl -X POST \
+        sudo curl -X POST \
           -H "Content-Type: application/json" \
           -H "Accept: application/json" \
           -H "Authorization: Basic bGlrZTpsaWtl" \
